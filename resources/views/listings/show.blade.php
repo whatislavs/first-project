@@ -49,6 +49,7 @@
                             </div>
                         </div>
                     </x-card>
+                    @auth
                     @if($listing->user_id == auth()->id())
                     <x-card class="mt-4 p-2 flex space-x-6">
                         <a href="/listings/{{$listing->id}}/edit">
@@ -62,5 +63,6 @@
                         </form>
                     </x-card> 
                     @endif
+                    @endauth
                 </div>
 </x-layout>

@@ -13,7 +13,7 @@
                 <p class="text-2xl text-gray-200 font-bold my-4">
                     Find or post Laravel jobs & projects
                 </p>
-                @if(!auth()->id())
+                @guest
                 <div>
                     <a
                         href="/register"
@@ -21,7 +21,8 @@
                         >Sign Up to post a job</a
                     >
                 </div>
-                @else 
+                @endguest
+                @auth 
                 <div>
                     <a
                         href="/listings/create"
@@ -29,6 +30,6 @@
                         >Post a job right now</a
                     >
                 </div>
-                @endif
+                @endauth
             </div>
         </section>
