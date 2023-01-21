@@ -58,4 +58,17 @@ class UserController extends Controller
         }
         return back()->withErrors(['email'=>'Invalid credentials'])->onlyInput('email');
     }
+
+    public function edit() {
+        return view('users.edit');
+    }
+
+    public function update(Request $request) {
+        $formFields = $request->validate([
+            'name' => ['required','min:3']
+        ]);
+        //update the user
+        auth()->user()->update($formFields);
+        return back()->with('message','Profile updated successfully!');
+    }
 }

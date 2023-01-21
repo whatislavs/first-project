@@ -57,6 +57,13 @@ Route::get('/login', [UserController::class, 'login'])->name('login')->middlewar
 // log in the user
 Route::post('/users/authenticate', [UserController::class, 'authenticate'])->middleware('guest');
 
+
+// edit user info
+Route::get('/users/edit', [UserController::class, 'edit'])->middleware('auth');
+// save user info edit
+Route::put('/users', [UserController::class, 'update'])->middleware('auth');
+
+
 // logout
 Route::post('/logout', [UserController::class, 'logout'])->middleware('auth');
 
