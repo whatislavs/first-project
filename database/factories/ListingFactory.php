@@ -11,6 +11,29 @@ class ListingFactory extends Factory
 {
    
     public static $developerTitles = array('Junior','Senior','Full-stack');
+    public static $developerTags = [['PHP','SQL','Laravel'],['Javascript','Laravel','React'],['Javascript','Laravel','Vue']];
+    
+    /* finish later
+    public static $developerTags = array('PHP','MySQL','Laravel','React','Vue');
+    public static $developerTagCount = 3;
+
+    public function generateRandomTag() {
+        return $developerTags[array_rand($developerTags)];
+    }
+
+    public function generateTags() {
+        $tagList = [];
+        $developerTags = self::$developerTags;
+        
+        for($i=0;$i<=$developerTagCount;$i++) {
+            
+            generateRandomTag();
+            
+        }
+        return implode(', ', $tagList);
+    }*/
+
+    
    
     /**
      * Define the model's default state.
@@ -23,7 +46,7 @@ class ListingFactory extends Factory
     {
         return [
             'title' => self::$developerTitles[array_rand(self::$developerTitles)] . ' Laravel Developer',
-            'tags' => 'php, mysql, laravel',
+            'tags' => implode(', ', self::$developerTags[array_rand(self::$developerTags)]),
             'company' => $this->faker->company(),
             'email' => $this->faker->companyEmail(),
             'website' => $this->faker->url(),

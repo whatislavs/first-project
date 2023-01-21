@@ -1,8 +1,10 @@
 <?php
 
+use App\Http\Controllers\ListingController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Models\Listing;
+use App\Http\Controllers\UserController;
 
 /*
 |--------------------------------------------------------------------------
@@ -15,27 +17,53 @@ use App\Models\Listing;
 |
 */
 
-Route::get('/', function () {
-    return view('listings', [
-        'heading' => 'Latest listings',
-        'listings' => Listing::all()
-    ]);
-});
+Route::get('/', [ListingController::class, 'index']);
 
-Route::get('/listings', function () {
-    return view('listings', [
-        'heading' => 'Latest listings',
-        'listings' => Listing::all()
-    ]);
-});
+// Show create Form view
+Route::get('/listings/create', [ListingController::class, 'create'])->middleware('auth');
+// Post new job ad data
+Route::post('/listings', [ListingController::class, 'store'])->middleware('auth');
+// Show editing view
+Route::get('/listings/{listing}/edit', [ListingController::class, 'edit'])->middleware('auth');
+// post edits - update
+Route::put('/listings/{listing}', [ListingController::class, 'update'])->middleware('auth');
+// delete
+Route::delete('/listings/{listing}', [ListingController::class, 'destroy'])->middleware('auth');
 
-Route::get('/listings/{listing}', function(Listing $listing) {
-    return view('listing', [
-        'listing' => $listing
-    ]);
-});
+//manage listings
+Route::get('/listings/manage', [ListingController::class, 'manage'])->middleware('auth');
+
+//should be last since it takes input
+Route::get('/listings/{listing}', [ListingController::class, 'show']);
+
+
+
+
+// -------------------------------------users
+
+// show register/create form
+Route::get('/register', [UserController::class, 'create'])->middleware('guest');
+
+// create new user
+Route::post('/users', [UserController::class, 'store'])->middleware('guest');
+
+// logout
+Route::post('/logout', [UserController::class, 'logout'])->middleware('auth');
+
+// show login form
+Route::get('/login', [UserController::class, 'login'])->name('login')->middleware('guest');
+
+// log in the user
+Route::post('/users/authenticate', [UserController::class, 'authenticate'])->middleware('guest');
 
 /*
+Route::get('/', function() {
+    $listings = Listing::all();
+    return view('listings', [
+        'listings' => $listings
+    ]);
+});
+
 Route::get('/listings/{id}', function($id) {
     $listing = Listing::find($id);
 
